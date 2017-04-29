@@ -53,8 +53,10 @@ class Hangman
 		@counter == 0
 	end
 	def winner
-		if password_name == true
-	end
-
+		if correct_blank.include?("_")
+			false
+		else
+			true
+		end
 end
 end

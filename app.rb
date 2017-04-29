@@ -28,31 +28,21 @@ end
 		erb :guessing, locals:{p1_name: session[:player1], p2_name: session[:player2], blank: session[:game].correct_blank, message: "Pick a letter..", array: session[:game].guessed, counter: session[:game].counter}
 	end
 	post '/guess' do
-		player1 = params[:player1]
-		player2 = params[:player2]
-		choice = params[:letter].upcase
-			if session[:game].available_guess(choice)
-				true
-				session[:game].update_guessed(choice)
-				session[:game].make_move(choice)
-					if session[:game].loser == true
-						redirect 'loser'
-					end
-			elsif session[:game].available_guess(choice)
-				true
-				session[:game].update_guessed(choice)
-				session[:game].make_move(choice)
-					if session[:game].winner == true
-						redirect 'winner'
-					end 
-					redirect '/guessing'
-			else
-				
-			 	redirect 'guessing?player1=' + player1 + '&player2' + player2
-			
-		erb :guessing, locals:{p1_name: session[:player1], p2_name: session[:player2], blank: session[:game].correct_blank, message: "Try again!", array: session[:game].guessed, counter: session[:game].counter}
-			
-	end
+	choice = params[:letter].upcase
+		if session[:game].available_guess(choice)
+			true
+			session[:game].update_guessed(choice)
+			session[:game].make_move(choice)
+				if session[:game].loser == true
+					redirect '/loser'
+				elsif session[:game].winner == true
+					redirect '/winner'
+				end
+			redirect '/guessing?'
+		else
+			session[:game].correct_index(choice)
+			erb :guessing, locals:{p1_name: session[:player1], p2_name: session[:player2], blank: session[:game].correct_blank, array: session[:game].guessed, counter: session[:game].counter, message: "", message2: "Letter already guessed. Try again."}
+		end
 
 	get '/loser' do
 		erb :loser, locals: {p1_name: session[:player1], p2_name: session[:player2]}
