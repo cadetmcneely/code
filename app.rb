@@ -43,11 +43,12 @@ end
 			session[:game].correct_index(choice)
 			erb :guessing, locals:{p1_name: session[:player1], p2_name: session[:player2], blank: session[:game].correct_blank, array: session[:game].guessed, counter: session[:game].counter, message: "", message2: "Letter already guessed. Try again."}
 		end
-
+end
 	get '/loser' do
 		erb :loser, locals: {p1_name: session[:player1], p2_name: session[:player2]}
 	end
 	get '/winner' do
-	 	erb :winner, locals:{p1_name: session[:player1], p2_name: session[:player2]}
-	end
+
+	erb :winner, locals: {p1_name: session[:player1], p2_name: session[:player2], word: session[:game].name}
+
 end
