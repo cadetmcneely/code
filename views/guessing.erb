@@ -4,7 +4,7 @@
 <center><h2><%=p2_name%> Start guessing the letters <h2></center>
 <center><%=blank%>
 <form method="post" action="guess">
-<p><center><input type="text" name="letter"</p>
+<p><center><input type="text" onkeyup="this.value = this.value.replace(/[^a-zA-Z]/, '')" maxlength= "1" name="letter"  autofocus></p>
 <%=message%>
 <%=counter%>
 <input type="hidden" name="player1" value='<%=p1_name%>'>
